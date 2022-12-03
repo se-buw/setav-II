@@ -4,16 +4,18 @@ import rpyc
 from ev3dev.ev3 import *
 import keyboard
 
+################################# initialisation of control
 conn = rpyc.classic.connect('192.168.0.110')  # use default TCP port (18812) WIFI:jor: 192.168.0.106 USB:10.42.0.232
 ev3 = conn.modules['ev3dev.ev3']
 motor_A = ev3.LargeMotor('outA')    
 motor_B = ev3.LargeMotor('outB')
 motor_C = ev3.MediumMotor('outC')
-motor_D = ev3.LargeMotor('outD')
+motor_D = ev3.LargeMotor('outD') 
 
 def main():
     start_steering()
 
+################################# input listening
 def start_steering():
     while True:
         event = keyboard.read_event()                                           # Wait for the next event.
@@ -45,29 +47,33 @@ def start_steering():
         elif event.event_type == keyboard.KEY_DOWN and event.name == 'space':   # stop
             print('space pressed')
 
-
-def turn(direction):            # turn left or right to
+################################# turn left or right
+def turn(direction):                            
     if direction == "left":
-        if motor_C.position<80:
+        if motor_C.position<90:
             motor_C.run_to_rel_pos(position_sp = 25,speed_sp=350)
             print("turn left") 
         else: 
             print("left limit")
-            motor_C.position = 80
+            motor_C.position = 90
     elif direction == "right":
-        if motor_C.position>-80:
+        if motor_C.position>-90:
             motor_C.run_to_rel_pos(position_sp = -25,speed_sp=350)
             print("turn right")
         else: 
             print("right limit")
-            motor_C.position = -80
+            motor_C.position = -90
     print(motor_C.position)
 
-def move(speed):
+
+################################# move forvard non-stop
+
+def move(speed):                                
     motor_A.run_forever(speed_sp=int(speed))
     motor_B.run_forever(speed_sp=-int(speed))
 
-def stop():
+################################# stop
+def stop():                                     
     print("stop")
     motor_A.stop()
     motor_B.stop()
