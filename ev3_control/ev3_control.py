@@ -8,7 +8,7 @@ class Car():
     def __init__(self) -> None:
         print("initiated car")
 
-    def turn(self, direction):
+    def turn(self, direction): 
         if direction == "left":
             print("turn left") 
         elif direction == "right":
