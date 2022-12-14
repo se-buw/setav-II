@@ -60,10 +60,8 @@ class lane:
 	                	right_lane_points[0].append(x2)
 	                	right_lane_points[1].append(y1)
 	                	right_lane_points[1].append(y2)
+	               	
 	                	
-	             
-	                		
-	                	cv.line(image, (x1,y1), (x2, y2), (0,0,255),2)
                 	else:
                 	
                 		left_lane_points[0].append(x1)
@@ -71,34 +69,56 @@ class lane:
 	                	left_lane_points[1].append(y1)
 	                	left_lane_points[1].append(y2)
                 		
-               
-                			
-                		cv.line(image, (x1,y1), (x2, y2), (0,0,255),2)
+               	
     	
-    	res1=stats.linregress(right_lane_points[0],right_lane_points[1])
-    	res2=stats.linregress(left_lane_points[0],left_lane_points[1])
+    	res1=np.polyfit(right_lane_points[1],right_lane_points[0],2)
+    	res2=np.polyfit(left_lane_points[1],left_lane_points[0],2)
     	
     	right_lane_max_y=max(right_lane_points[1])
     	right_lane_min_y=min(right_lane_points[1])
     	
     	
     	
-    	increment_value=(right_lane_max_y-right_lane_min_y)//10;
-    	
-    	mid_points=[]
-    	
-    	for i in range(1,11):
-    		y=right_lane_min_y+(i*increment_value)
-    		x=(((y-res1.intercept)/res1.slope)+((y-res2.intercept)/res2.slope))/2
-    		mid_points.append((int(x),y))
-    	
-    	print(mid_points)  			
+    	y_values=np.linspace(right_lane_min_y,right_lane_max_y,10,dtype=int)
+    	right_x=(res1[0]*y_values**2+res1[1]*y_values+res1[2]).astype(int)
+    	left_x=(res2[0]*y_values**2+res2[1]*y_values+res2[2]).astype(int)
     	
     	for i in range(0,9):
-    		cv.line(image,mid_points[i],mid_points[i+1],(0,255,0),2)	
+    		x1=right_x[i].item()    #converting numpy.int64 to python int
+    		y1=y_values[i].item()
+    		x2=right_x[i+1].item()
+    		y2=y_values[i+1].item()
+    	
+    		cv.line(image,(x1,y1),(x2,y2),(0,0,255),2)
+    		
+    		
+    		x1=left_x[i].item()    
+    		y1=y_values[i].item()
+    		x2=left_x[i+1].item()
+    		y2=y_values[i+1].item()
+    	
+    		cv.line(image,(x1,y1),(x2,y2),(0,0,255),2)
+    	
+    	
+    	
+    	
+    	x_values_center=((res1[0]*y_values**2+res1[1]*y_values+res1[2])+(res2[0]*y_values**2+res2[1]*y_values+res2[2]))//2
+    	x_values_center=x_values_center.astype(int)			
+    	
+    	for i in range(0,9):
+    		x1=x_values_center[i].item()    #converting numpy.int64 to python int
+    		y1=y_values[i].item()
+    		x2=x_values_center[i+1].item()
+    		y2=y_values[i+1].item()
+    	
+    		cv.line(image,(x1,y1),(x2,y2),(0,255,0),2)	
     	
     	  
     	return image
+    	
+    	
+    	
+    	
         
     def convertImage(msg):
         
