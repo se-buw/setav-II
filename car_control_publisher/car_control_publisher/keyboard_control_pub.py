@@ -13,10 +13,12 @@ class Keyboard_control_pub(Node):
         # SET PARAMETERS:
         self.message_text = ""
         self.motor_speed = 100
+        self.speed_limit = 400
+        self.speed_step = 20
+        timer_period = 0.01
 
         self.publisher_ = self.create_publisher(String, 'topic', 10)
 
-        timer_period = 0.01
         self.timer = self.create_timer(timer_period, self.publish_msg)
 
         listener = keyboard.Listener(on_press=self.on_press, on_release=self.on_release)
@@ -32,10 +34,12 @@ class Keyboard_control_pub(Node):
 
     def on_press(self,key):
         if key == keyboard.Key.up:          # start forward
-            if (self.motor_speed<700): self.motor_speed = self.motor_speed+50 
+            if (self.motor_speed < self.speed_limit):
+                self.motor_speed = self.motor_speed + self.speed_step 
             self.message_text = "move " + str(self.motor_speed)
         elif key == keyboard.Key.down:      # start backward 
-            if (self.motor_speed<700): self.motor_speed = self.motor_speed+50 
+            if (self.motor_speed < self.speed_limit): 
+                self.motor_speed = self.motor_speed + self.speed_step 
             self.message_text = "move " + str(-self.motor_speed)
         elif key == keyboard.Key.left:      # turn left
             self.message_text = "left"
@@ -49,10 +53,10 @@ class Keyboard_control_pub(Node):
     def on_release(self,key):
         if key == keyboard.Key.up or key ==keyboard.Key.down:
             self.message_text = "stop"
-            self.motor_speed = 100
+            self.motor_speed = self.motor_speed
         if key == keyboard.Key.left or key ==keyboard.Key.right:
             self.message_text = "stop_turn"
-            self.motor_speed = 100
+            self.motor_speed = self.motor_speed
         elif key == keyboard.Key.esc:
             self.message_text = "stop_control"
 

@@ -2,6 +2,7 @@
 
 from pynput import keyboard
 from ev3_control import Car 
+<<<<<<< HEAD
 motor_speed = 100
 def on_press(key):
     global motor_speed
@@ -13,6 +14,18 @@ def on_press(key):
         print('\ndown pressed')
         if (motor_speed<700): motor_speed = motor_speed+50
         car.move(-motor_speed)
+=======
+
+def on_press(key):
+
+    # print('special key {0} pressed'.format(key))
+    if key == keyboard.Key.up:          # start forward
+        print('\nup pressed')
+        car.move(500)
+    elif key == keyboard.Key.down:      # start backward 
+        print('\ndown pressed')
+        car.move(-500)
+>>>>>>> 8dd8084dbde1b064ab26b23311b6b7df3bb52e96
     elif key == keyboard.Key.left:      # turn left
         print('\nleft')
         car.turn("left")
@@ -27,6 +40,7 @@ def on_press(key):
     elif key == keyboard.Key.space:     # stop 
         print('\nspace')
         car.stop()
+<<<<<<< HEAD
         motor_speed
 
 def on_release(key):
@@ -39,6 +53,16 @@ def on_release(key):
             print('\nstop turn')
             car.stop()
             motor_speed = 100
+=======
+
+def on_release(key):
+    if key == keyboard.Key.up or key ==keyboard.Key.down:            # stop move
+            print('\nstop move')
+            car.stop()
+    if key == keyboard.Key.left or key ==keyboard.Key.right:            # stop turn
+            print('\nstop turn')
+            car.stop()
+>>>>>>> 8dd8084dbde1b064ab26b23311b6b7df3bb52e96
     elif key == keyboard.Key.esc:
         # Stop listener
         return False

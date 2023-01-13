@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import rpyc
 import rclpy
 from rclpy.node import Node
 from ev3dev.ev3 import *
@@ -11,7 +12,7 @@ class Keyboard_control_sub(Node):
     def __init__(self):
         super().__init__('keyboard_control_subscriber')
 
-        self.car=emulated_Car()
+        self.car=Car()
 
         self.subscription = self.create_subscription(String,'topic',self.listener_callback,10)
         self.subscription  # prevent unused variable warning
@@ -35,7 +36,7 @@ class Keyboard_control_sub(Node):
 
 class emulated_Car():
     def __init__(self) -> None:
-        print("initiated car")
+        print("initiated emulated   car")
 
     def turn(self, direction): 
         if direction == "left":
@@ -58,30 +59,39 @@ class emulated_Car():
 
 class Car():
     def __init__(self) -> None:
+        # SETUP CONNECTIONS:
         conn = rpyc.classic.connect('192.168.0.121')  # use default TCP port (18812) WIFI:jor: 192.168.0.106 USB:10.42.0.232
         ev3 = conn.modules['ev3dev.ev3']
+
+        # SET MOTORS:
         self.motor_A = ev3.LargeMotor('outA')    # 
         self.motor_B = ev3.LargeMotor('outB')
         self.motor_C = ev3.MediumMotor('outC')
         self.motor_D = ev3.LargeMotor('outD')
+
+        # SET PARAMETERS:
+        self.wheel_step_angle = 10
+        self.wheel_turn_speed = 700
+        self.wheel_angle_limit = 80
+
         print("initiated car")
         # self.start_steering(self)
 
     def turn(self,direction):
         if direction == "left":
-            if self.motor_C.position<80:
-                self.motor_C.run_to_rel_pos(position_sp = 15,speed_sp=450)
+            if self.motor_C.position < self.wheel_angle_limit:
+                self.motor_C.run_to_rel_pos(position_sp = self.wheel_step_angle, speed_sp = self.wheel_turn_speed)
                 print("turn left") 
             else: 
                 print("left limit")
-                self.motor_C.position = 80
+                self.motor_C.position = self.wheel_angle_limit
         elif direction == "right":
-            if self.motor_C.position>-80:
-                self.motor_C.run_to_rel_pos(position_sp = -15,speed_sp=450)
+            if self.motor_C.position > -self.wheel_angle_limit:
+                self.motor_C.run_to_rel_pos(position_sp = -self.wheel_step_angle, speed_sp = self.wheel_turn_speed)
                 print("turn right")
             else: 
                 print("right limit")
-                self.motor_C.position = -80
+                self.motor_C.position = -self.wheel_angle_limit
         print(self.motor_C.position)
 
     def move(self,speed):
