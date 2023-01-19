@@ -116,7 +116,25 @@ class lane:
     	  
     	return image
     	
-    	
+    #def convert_pixels_to_cartesian(x, y, origin_x, origin_y, x_scaling_factor, y_scaling_factor):
+	
+     #   X = (x1 - origin_x) * x_scaling_factor
+     #   Y = (y1- origin_y) * y_scaling_factor
+    #return X, Y
+
+   #x_pixel = 800
+   #y_pixel = 600
+   #origin_x = 0
+   #origin_y = 600
+   #x_scaling_factor = captured distance/800
+   #y_scaling_factor = captured distance/600
+
+   #X, Y = convert_pixels_to_cartesian(x_pixel, y_pixel, origin_x, origin_y, x_scaling_factor, y_scaling_factor)
+
+   #print("Pixel location:", x_pixel, y_pixel)
+   #print("Cartesian Coordinate:", X, Y)
+
+
     	
     	
         
