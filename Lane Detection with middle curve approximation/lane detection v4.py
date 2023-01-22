@@ -3,6 +3,7 @@ import cv2 as cv
 import numpy as np
 import rclpy
 from sensor_msgs.msg import CompressedImage
+from std_msgs.msg import Int16MultiArray
 from cv_bridge import CvBridge
 from scipy import stats
 
@@ -43,7 +44,7 @@ class lane:
 
 # drawing the lines as per the edges
 
-    def drawLines(self,lines,image):
+    def center_line_approximation(self,lines,image):
     
     	right_lane_min_y=10000
     	right_lane_max_y=0
@@ -112,56 +113,31 @@ class lane:
     		y2=y_values[i+1].item()
     	
     		cv.line(image,(x1,y1),(x2,y2),(0,255,0),2)
-    		print("new")
-    		print(x1)
-    		print(y1)
-    		print(x2)
-    		print(y2)
+    		
+    	center_lane_points=[]
+    	center_lane_points.append(x_values_center,y_values)
+    	print(center_lane_points)
+    	publisher.publish(center_lane_points)
+    	
     	
     	  
     	return image
     	
-    #def convert_pixels_to_cartesian(x, y, origin_x, origin_y, x_scaling_factor, y_scaling_factor):
-	
-     #   X = (x1 - origin_x) * x_scaling_factor
-     #   Y = (y1- origin_y) * y_scaling_factor
-    #return X, Y
-
-   #x_pixel = 800
-   #y_pixel = 600
-   #origin_x = 0
-   #origin_y = 600
-   #x_scaling_factor = captured distance/800
-   #y_scaling_factor = captured distance/600
-
-   #X, Y = convert_pixels_to_cartesian(x_pixel, y_pixel, origin_x, origin_y, x_scaling_factor, y_scaling_factor)
-
-   #print("Pixel location:", x_pixel, y_pixel)
-   #print("Cartesian Coordinate:", X, Y)
-
-
+    	
     	
     	
         
-    def convertImage(msg):
+def convertImage(msg):
         
-        image=CvBridge().compressed_imgmsg_to_cv2(msg)
-	#image=CvBridge().imgmsg_to_cv2(msg)
-	#result.write(image)
-	#cv.imwrite("trainingImages/lane_image_"+str(count)+".jpg",image)
-	#count+=1
-        return image
+    image=CvBridge().compressed_imgmsg_to_cv2(msg)
+    detect_lane(image)
        
      
 
-    
-    
-# Compressed Images are subscribed from the raspberry pi 
-def main():
-    
-    img=cv.imread('lane_image_0.jpg',cv.IMREAD_COLOR)
-    img=img[240:480,10:640]
+def detect_lane(img):
     detect=lane([173,29],[27,103],[389,29],[585,141])
+    img=img[240:480,10:640]
+    
     img=detect.perspective(img)
     image=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
     
@@ -172,19 +148,35 @@ def main():
     cv.imwrite('binary.jpg',image)
     smooth=detect.gaussianFilter(image)
     smooth=cv.Canny(smooth,5,170)
-    cv.imshow('canny',smooth)
-    cv.waitKey(3000)
     cv.imwrite('edge.jpg',smooth)
     
     #cv.imwrite('binary_output.jpg',image)	
     hough=detect.houghlines(image)
-    #print(hough)
-    laneDetection=detect.drawLines(hough,img)
-    cv.imshow("final_output",laneDetection)
-    cv.waitKey(10000)
+    laneDetection=detect.center_line_approximation(hough,img)
     cv.imwrite('detected_lane.jpg',laneDetection)
-    cv.destroyAllWindows
+   
+  
+
     
+    
+# Compressed Images are subscribed from the raspberry pi 
+def main(args=None):
+
+    
+    rclpy.init(args=args)
+    subscriber_node=rclpy.create_node("Compressed_image_subscriber")
+    publisher_node=rclpy.create_node("Lane_publisher")
+    
+    subscription=subscriber_node.create_subscription(CompressedImage,'/image_raw/compressed',convertImage,10)
+    publisher=publisher_node.create_publisher(Int16MultiArray,"lane_coordinates",10)
+    rclpy.spin(subscriber_node)
+    rclpy.spin(publisher_node)
+    subscriber_node.destroy_node()
+    publisher_node.destroy_node()
+    rclpy.shutdown()
+    
+    
+      
     
 
 
