@@ -31,6 +31,7 @@ class Keyboard_control_pub(Node):
         self.msg = String()
         self.msg.data=self.message_text
         self.publisher_.publish(self.msg)
+        print("published message:%s" %self.message_text)
         self.message_text = ""
 
     # Detecting press of some key on keyboard
