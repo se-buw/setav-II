@@ -5,17 +5,18 @@ from rclpy.node import Node
 from pynput import keyboard
 from std_msgs.msg import String
 
+# Node creation class
 class Keyboard_control_pub(Node):
 
     def __init__(self):
         super().__init__('keyboard_control_publisher')
 
-        # SET PARAMETERS:
+        # Set default parameters for direct control from keyboard:
         self.message_text = ""
-        self.motor_speed = 100
-        self.speed_limit = 400
-        self.speed_step = 20
-        timer_period = 0.01
+        self.motor_speed = 100      # initial speed when car starts moving
+        self.speed_limit = 400      # max reachable speed
+        self.speed_step = 20        # speed increased by steps until reach limit
+        timer_period = 0.01         # time period for timer
 
         self.publisher_ = self.create_publisher(String, 'topic', 10)
 
@@ -32,6 +33,7 @@ class Keyboard_control_pub(Node):
         self.publisher_.publish(self.msg)
         self.message_text = ""
 
+    # Detecting press of some key on keyboard
     def on_press(self,key):
         if key == keyboard.Key.up:          # start forward
             if (self.motor_speed < self.speed_limit):
@@ -42,14 +44,15 @@ class Keyboard_control_pub(Node):
                 self.motor_speed = self.motor_speed + self.speed_step 
             self.message_text = "move " + str(-self.motor_speed)
         elif key == keyboard.Key.left:      # turn left
-            self.message_text = "left"
+            self.message_text = "turn_left"
         elif key == keyboard.Key.right:     # turn right 
-            self.message_text = "right"
+            self.message_text = "turn_right"
         elif key == keyboard.Key.enter:     # set current wheel angle to zero 
             self.message_text = "set_zero"
         elif key == keyboard.Key.space:     # stop 
             self.message_text = "stop"
 
+    # Detecting release of some key on keyboard
     def on_release(self,key):
         if key == keyboard.Key.up or key ==keyboard.Key.down:
             self.message_text = "stop"
