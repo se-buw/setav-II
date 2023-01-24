@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'talker = car_control_publisher.keyboard_control_pub:main',
-            'listener = car_control_publisher.keyboard_control_sub:main',
+            'talker = car_control_publisher.keyboard_control_publisher:main',
+            'listener = car_control_publisher.car_control_subscriber:main',
         ],
     },
 )

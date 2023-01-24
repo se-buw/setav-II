@@ -69,7 +69,7 @@ class Car():
         self.motor_C = ev3.MediumMotor('outC')
         self.motor_D = ev3.LargeMotor('outD')
 
-        # SET PARAMETERS:
+        # SET DEFAULT PARAMETERS:
         self.wheel_step_angle = 10
         self.wheel_turn_speed = 700
         self.wheel_angle_limit = 80
@@ -110,6 +110,12 @@ class Car():
     def set_zero(self):
         print("set zero")
         self.motor_C.position = 0
+
+    def set_parameters(self, step_angle, turn_speed, angle_limit):
+        self.wheel_step_angle = step_angle
+        self.wheel_turn_speed = turn_speed
+        self.wheel_angle_limit = angle_limit
+        pass
 
 
 def main(args=None):
