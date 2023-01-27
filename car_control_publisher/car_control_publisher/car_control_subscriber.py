@@ -6,6 +6,10 @@ from rclpy.node import Node
 from ev3dev.ev3 import *
 from std_msgs.msg import String
 
+# Start real usage:
+#       ros2 run car_control_publisher listener
+# To start emulated car:
+#       ros2 run car_control_publisher listener --ros-args -p emulation:=True
 # Commands to control car:
 # std_msgs.msg.String with space separation: "command parameter"
 # 
@@ -24,12 +28,19 @@ from std_msgs.msg import String
 # Node creation class
 class Keyboard_control_sub(Node):
 
+    
     def __init__(self):
         super().__init__('keyboard_control_subscriber')
 
-        self.car=Emulated_Car()
+        # Choose car type, default: emulation = False
+        self.declare_parameter('emulation', False)
+        emulation = self.get_parameter('emulation').get_parameter_value().bool_value
+        if emulation == True:
+            self.car=Emulated_Car()
+        else:
+            self.car=Car()
 
-        self.subscription = self.create_subscription(String,'topic',self.listener_callback,10)
+        self.subscription = self.create_subscription(String,'ev3_control_topic',self.listener_callback,10)
         self.subscription  # prevent unused variable warning
 
     def listener_callback(self, msg):

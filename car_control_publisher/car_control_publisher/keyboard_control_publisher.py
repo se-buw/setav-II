@@ -18,7 +18,7 @@ class Keyboard_control_pub(Node):
         self.speed_step = 20        # speed increased by steps until reach limit
         timer_period = 0.01         # time period for timer
 
-        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        self.publisher_ = self.create_publisher(String, 'ev3_control_topic', 10)
 
         self.timer = self.create_timer(timer_period, self.publish_msg)
 
