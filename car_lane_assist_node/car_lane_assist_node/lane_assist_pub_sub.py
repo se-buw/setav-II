@@ -9,6 +9,7 @@ import numpy as np
 import math
 
 
+
 class Vehicle(object):
 
     #intialial position of vehicle
@@ -70,12 +71,13 @@ class Vehicle(object):
 
 
 class Middle_curve(object):
-    def __init__(self, pixel_x = 0, pixel_y = 0):
+    def __init__(self):
         self.origin_x = 0
         self.origin_y = 0
         self.x_scaling_factor = 0.00125
         self.y_scaling_factor = 0.00125
         self.total_image_height = 600
+        
         
         
 
@@ -84,7 +86,7 @@ class Middle_curve(object):
         self.pixel_x = pixel_x
         self.pixel_y = pixel_y
 
-    def convert_pixels_to_cartesian(self, pixel_x, pixel_y):
+    def convert_pixels_to_cartesian(self):
         self.x_mid = (self.pixel_x - self.origin_x) * self.x_scaling_factor
         self.y_mid = (self.total_image_height - self.pixel_y - self.origin_y) * self.y_scaling_factor
         #print("Cartesian Coordinate:", self.x_mid, self.y_mid)
@@ -97,7 +99,8 @@ class Middle_curve(object):
 
 middle_curve = Middle_curve()
 middle_curve.set(800,400)
-middle_curve.x_mid, middle_curve.y_mid = middle_curve.convert_pixels_to_cartesian(middle_curve.pixel_x, middle_curve.pixel_y)
+#middle_curve.set()
+middle_curve.x_mid, middle_curve.y_mid = middle_curve.convert_pixels_to_cartesian()
 
 vehicle = Vehicle()
 vehicle.set(0, 0.375, 0)
@@ -133,7 +136,6 @@ print("vehicle x&y:", vehicle.x, vehicle.y)
 print("steer angle in degrees", steer_angle)
 
 
-
 # Publisher node creation class
 class lane_assist_publisher(Node):
 
@@ -160,10 +162,10 @@ class lane_assist_subscriber(Node):
     def listener_callback(self, msg):
         self.get_logger().info('I also heard: "%s"' % msg.data)
     
-        vehicle = Vehicle()
+        middle_curve = Middle_curve()
         x = msg.data[0]
         y = msg.data[1]
-        vehicle.set(x,y)
+        middle_curve.set(x,y)
         angles = vehicle.run()
         global command
         for angle in angles:
