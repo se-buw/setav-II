@@ -6,7 +6,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Int16MultiArray
 import random
 import numpy as np
-import matplotlib.pyplot as plt
+import math
 
 
 class Vehicle(object):
@@ -17,6 +17,9 @@ class Vehicle(object):
         self.difference_rotation = 0.0
         self.difference_drift = 0.0
         self.length = length
+        self.steer = 0
+
+
 
         #setting coordinates of vehicle
     def set(self, x, y, angle):
@@ -46,6 +49,7 @@ class Vehicle(object):
          distance = random.gauss(distance, self.difference_distance)
 
          steer += self.difference_drift
+         
 
          rotate = np.tan(steer * distance / self.length)
          if abs(rotate) < tolerance:
@@ -61,29 +65,72 @@ class Vehicle(object):
             self.x = cx + (np.sin(self.angle) * radius)
             self.y = cy - (np.cos(self.angle) * radius)
 
-    
-    def run(self, wp, wd, wi, n=100, speed=2.0):
-        x_trajectory = []
-        y_trajectory = []
-        
-        prev_cte = self.y
-        sum_cte = 0
-        for _ in range(n):
-            sum_cte += self.y
-            dev = self.y - prev_cte
-            prev_cte = self.y
-            steer = -wp * self.y - wd * dev - wi*sum_cte
-            self.drive(steer, speed)
-            x_trajectory.append(self.x)
-            y_trajectory.append(self.y)
-            print(steer)
-        
-        # write a code to derive angles from the steer
-        angles = []
-        return angles
-
     def __repr__(self):
         return '[x=%.5f y=%.5f orient=%.5f]' % (self.x, self.y, self.angle)
+
+
+class Middle_curve(object):
+    def __init__(self, pixel_x = 0, pixel_y = 0):
+        self.origin_x = 0
+        self.origin_y = 0
+        self.x_scaling_factor = 0.00125
+        self.y_scaling_factor = 0.00125
+        self.total_image_height = 600
+        
+        
+
+    def set(self, pixel_x, pixel_y):
+
+        self.pixel_x = pixel_x
+        self.pixel_y = pixel_y
+
+    def convert_pixels_to_cartesian(self, pixel_x, pixel_y):
+        self.x_mid = (self.pixel_x - self.origin_x) * self.x_scaling_factor
+        self.y_mid = (self.total_image_height - self.pixel_y - self.origin_y) * self.y_scaling_factor
+        #print("Cartesian Coordinate:", self.x_mid, self.y_mid)
+        return self.x_mid, self.y_mid
+        
+
+    def update_xymid(self, pixel_x, pixel_y):
+        self.x_mid, self.y_mid = self.convert_pixels_to_cartesian(pixel_x, pixel_y)
+
+
+middle_curve = Middle_curve()
+middle_curve.set(800,400)
+middle_curve.x_mid, middle_curve.y_mid = middle_curve.convert_pixels_to_cartesian(middle_curve.pixel_x, middle_curve.pixel_y)
+
+vehicle = Vehicle()
+vehicle.set(0, 0.375, 0)
+vehicle.set_difference_drift(10/180.*np.pi)  # add drift bias
+
+
+
+
+def calculate_steer():
+    # calculate the desired orientation angle from current position to target
+    desired_orientation = np.arctan2(middle_curve.y_mid - vehicle.y, middle_curve.x_mid - vehicle.x)
+    steer = desired_orientation - vehicle.angle
+    # keep the steer angle between -pi and pi
+    steer = (steer + np.pi/2) % (2 * np.pi/2) - np.pi/2
+    print(steer)
+    return steer
+
+
+def calculate_steer_angle():
+    steer_angle = steer * 180/math.pi
+    #print("angle", steer_angle)
+    return steer_angle
+
+# calculate steer to reach x_mid, y_mid
+steer = calculate_steer()
+steer_angle = calculate_steer_angle()
+# drive the vehicle with the calculated steer and a constant speed
+vehicle.drive(steer, 1)
+
+print("Pixel location:", middle_curve.pixel_x, middle_curve.pixel_y)
+print("x_mid & y_mid:", middle_curve.x_mid, middle_curve.y_mid)
+print("vehicle x&y:", vehicle.x, vehicle.y)
+print("steer angle in degrees", steer_angle)
 
 
 
