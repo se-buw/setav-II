@@ -132,7 +132,6 @@ vehicle.drive(steer, 1)
 
 print("Pixel location:", middle_curve.pixel_x, middle_curve.pixel_y)
 print("x_mid & y_mid:", middle_curve.x_mid, middle_curve.y_mid)
-print("vehicle x&y:", vehicle.x, vehicle.y)
 print("steer angle in degrees", steer_angle)
 
 
