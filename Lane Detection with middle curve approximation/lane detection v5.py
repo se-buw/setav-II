@@ -111,13 +111,9 @@ class lane:
         
             cv.line(image,(x1,y1),(x2,y2),(0,255,0),2)
             
-        
-        
-        
-        output=Int64MultiArray(data=x_values_center.tolist())
-        publisher_x.publish(output)
-        output=Int64MultiArray(data=y_values.tolist())
-        publisher_y.publish(output)
+        points=x_values_center.tolist()+y_values.tolist()
+        center_lane_points=Int64MultiArray(data=points)
+        publisher.publish(center_lane_points)
         
         
             
@@ -165,19 +161,16 @@ def main(args=None):
     
     rclpy.init(args=args)
     subscriber_node=rclpy.create_node("Compressed_image_subscriber")
-    publisher_node_x=rclpy.create_node("Lane_publisher_X")
-    publisher_node_y=rclpy.create_node("Lane_publisher_Y")
+    publisher_node=rclpy.create_node("Lane_publisher")
     
     subscription=subscriber_node.create_subscription(CompressedImage,'/image_raw/compressed',convertImage,10)
-    global publisher_x,publisher_y
-    publisher_x=publisher_node_x.create_publisher(Int64MultiArray,"lane_coordinates_x",10)
-    publisher_y=publisher_node_y.create_publisher(Int64MultiArray,"lane_coordinates_y",10)
+    global publisher
+    publisher=publisher_node.create_publisher(Int64MultiArray,"lane_coordinates",10)
+    
     rclpy.spin(subscriber_node)
-    rclpy.spin(publisher_node_x)
-    rclpy.spin(publisher_node_y)
+    rclpy.spin(publisher_node)
     subscriber_node.destroy_node()
-    publisher_node_x.destroy_node()
-    publisher_node_y.destroy_node()
+    publisher_node.destroy_node()
     rclpy.shutdown()
     
     
