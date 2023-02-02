@@ -78,8 +78,6 @@ class Middle_curve(object):
         self.y_scaling_factor = 0.00125
         self.total_image_height = 600
         
-        
-        
 
     def set(self, pixel_x, pixel_y):
 
@@ -97,43 +95,6 @@ class Middle_curve(object):
         self.x_mid, self.y_mid = self.convert_pixels_to_cartesian(pixel_x, pixel_y)
 
 
-middle_curve = Middle_curve()
-middle_curve.set(800,400)
-#middle_curve.set()
-middle_curve.x_mid, middle_curve.y_mid = middle_curve.convert_pixels_to_cartesian()
-
-vehicle = Vehicle()
-vehicle.set(0, 0.375, 0)
-vehicle.set_difference_drift(10/180.*np.pi)  # add drift bias
-
-
-
-
-def calculate_steer():
-    # calculate the desired orientation angle from current position to target
-    desired_orientation = np.arctan2(middle_curve.y_mid - vehicle.y, middle_curve.x_mid - vehicle.x)
-    steer = desired_orientation - vehicle.angle
-    # keep the steer angle between -pi and pi
-    steer = (steer + np.pi/2) % (2 * np.pi/2) - np.pi/2
-    print(steer)
-    return steer
-
-
-def calculate_steer_angle():
-    steer_angle = steer * 180/math.pi
-    #print("angle", steer_angle)
-    return steer_angle
-
-# calculate steer to reach x_mid, y_mid
-steer = calculate_steer()
-steer_angle = calculate_steer_angle()
-# drive the vehicle with the calculated steer and a constant speed
-vehicle.drive(steer, 1)
-
-print("Pixel location:", middle_curve.pixel_x, middle_curve.pixel_y)
-print("x_mid & y_mid:", middle_curve.x_mid, middle_curve.y_mid)
-print("steer angle in degrees", steer_angle)
-
 
 # Publisher node creation class
 class lane_assist_publisher(Node):
@@ -141,13 +102,16 @@ class lane_assist_publisher(Node):
     def __init__(self):
         super().__init__('lane_assist_pub')
         self.publisher_ = self.create_publisher(String, 'ev3_control_topic', 10)
-        timer_period =  0.01  
-        self.timer = self.create_timer(timer_period, self.publish_msg)
+        # timer_period =  0.01  
+        self.publish_msg()
+        # self.timer = self.create_timer(timer_period, self.publish_msg)
 
     def publish_msg(self):
         self.msg = String()
         self.msg.data = command
         self.publisher_.publish(self.msg)
+        print(command)
+        
 
 
 
@@ -165,22 +129,65 @@ class lane_assist_subscriber(Node):
         x = msg.data[0]
         y = msg.data[1]
         middle_curve.set(x,y)
-        angles = vehicle.run()
-        global command
-        for angle in angles:
-            command= "turn_to_angle %s" %angle
 
+        command= "move 10"
+        print(command)
+
+
+class Emulation_class():
+    def __init__(self):
+        self.middle_curve = Middle_curve()
+
+    def receive_topic(self):
+        self.middle_curve.set(800,400)
+        #middle_curve.set()
+        self.middle_curve.x_mid, self.middle_curve.y_mid = self.middle_curve.convert_pixels_to_cartesian()
+
+        self.vehicle = Vehicle()
+        self.vehicle.set(0, 0.375, 0)
+        self.vehicle.set_difference_drift(10/180.*np.pi)  # add drift bias
+
+        # calculate steer to reach x_mid, y_mid
+        self.steer = self.calculate_steer()
+        self.steer_angle = self.calculate_steer_angle()
+        # drive the vehicle with the calculated steer and a constant speed
+        self.vehicle.drive(self.steer, 1)
+
+        print("Pixel location:", self.middle_curve.pixel_x, self.middle_curve.pixel_y)
+        print("x_mid & y_mid:", self.middle_curve.x_mid, self.middle_curve.y_mid)
+        print("steer angle in degrees", self.steer_angle)
+        global command 
+        command = "angle"
+
+    def calculate_steer(self):
+        # calculate the desired orientation angle from current position to target
+        desired_orientation = np.arctan2(self.middle_curve.y_mid - self.vehicle.y, self.middle_curve.x_mid - self.vehicle.x)
+        self.steer = desired_orientation - self.vehicle.angle
+        # keep the steer angle between -pi and pi
+        self.steer = (self.steer + np.pi/2) % (2 * np.pi/2) - np.pi/2
+        print(self.steer)
+        return self.steer
+
+
+    def calculate_steer_angle(self):
+        steer_angle = self.steer * 180/math.pi
+        #print("angle", steer_angle)
+        return steer_angle
 
 
 def main(args=None):
     
+    global command
+    command = "set_zero"
     rclpy.init(args = args)
     lane_assist_pub = lane_assist_publisher()
     lane_assist_sub = lane_assist_subscriber()
+
+    emulation = Emulation_class()
     while(True):
+        emulation.receive_topic()
         rclpy.spin_once(lane_assist_pub)
         rclpy.spin_once(lane_assist_sub)
-        
     
 
     lane_assist_pub.destroy_node()
