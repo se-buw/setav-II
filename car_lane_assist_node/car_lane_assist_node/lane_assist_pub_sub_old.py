@@ -3,7 +3,7 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
-from std_msgs.msg import Int64MultiArray
+from std_msgs.msg import Int16MultiArray
 import random
 import numpy as np
 import math
@@ -70,7 +70,7 @@ class Vehicle(object):
         return '[x=%.5f y=%.5f orient=%.5f]' % (self.x, self.y, self.angle)
 
 
-class Middle_curve():
+class Middle_curve(object):
     def __init__(self):
         self.origin_x = 0
         self.origin_y = 0
@@ -97,16 +97,16 @@ class Middle_curve():
 
 
 # Publisher node creation class
-class Lane_assist_publisher(Node):
+class lane_assist_publisher(Node):
 
     def __init__(self):
         super().__init__('lane_assist_pub')
         self.publisher_ = self.create_publisher(String, 'ev3_control_topic', 10)
         # timer_period =  0.01  
-        self.publish_msg("")
+        self.publish_msg()
         # self.timer = self.create_timer(timer_period, self.publish_msg)
 
-    def publish_msg(self,command):
+    def publish_msg(self):
         self.msg = String()
         self.msg.data = command
         self.publisher_.publish(self.msg)
@@ -117,21 +117,17 @@ class Lane_assist_publisher(Node):
 
 
 # Listner node creation class
-class Lane_assist_subscriber(Node):
+class lane_assist_subscriber(Node):
 
     def __init__(self):
         super().__init__('lane_assist_sub')
-        print("subscriber initialized")
-        self.subscription = self.create_subscription(Int64MultiArray,"lane_coordinates",self.listener_callback,10)
-        self.subscription
-        self.lane_assist_pub = Lane_assist_publisher()
+        self.subscription = self.create_subscription(Int16MultiArray,"lane_coordinates",self.listener_callback,10)
+        self.lane_assist_pub = lane_assist_publisher()
 
     def listener_callback(self, msg):
-        print("callback received")
-
         self.get_logger().info('I also heard: "%s"' % msg.data)
     
-        self.middle_curve = Middle_curve()
+        middle_curve = Middle_curve()
         x = msg.data[0]
         y = msg.data[1]
 
@@ -153,11 +149,10 @@ class Lane_assist_subscriber(Node):
         print("x_mid & y_mid:", self.middle_curve.x_mid, self.middle_curve.y_mid)
         print("steer angle in degrees", self.steer_angle)
         global command 
-        command = "move 100"
-        self.lane_assist_pub.publish_msg(command)
-        self.steer_angle = self.steer_angle + 17
-        command = "turn_to_angle %s" %self.steer_angle
-        self.lane_assist_pub.publish_msg(command)
+        command = "move 30"
+        self.lane_assist_pub.publish(command)
+        command = "turn %s" %self.steer_angle
+        self.lane_assist_pub.publish(command)
 
 
 # class Emulation_class():
@@ -191,7 +186,7 @@ def main(args=None):
     command = "set_zero"
     rclpy.init(args = args)
     # lane_assist_pub = lane_assist_publisher()
-    lane_assist_sub = Lane_assist_subscriber()
+    lane_assist_sub = lane_assist_subscriber()
 
     # emulation = Emulation_class()
     rclpy.spin(lane_assist_sub)
@@ -204,7 +199,7 @@ def main(args=None):
         
     
 
-    # lane_assist_pub.destroy_node()
+    lane_assist_pub.destroy_node()
     lane_assist_sub.destroy_node()
     rclpy.shutdown()
     
