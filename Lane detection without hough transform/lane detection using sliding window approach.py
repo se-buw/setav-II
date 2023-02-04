@@ -31,32 +31,29 @@ class lane:
 
 
     def drawLines(self,leftx,lefty,rightx,righty,image):
-    
-    	              	
-    	
-        res1=np.polyfit(lefty,leftx,2)
-        res2=np.polyfit(righty,rightx,2)
-        print(res1)
-        print(res2)
-    	
-    	
+        	
     	
         y_values=np.linspace(0,image.shape[0]-1,image.shape[0],dtype=int)
         try:
+            res1=np.polyfit(lefty,leftx,2)
+            res2=np.polyfit(righty,rightx,2)
+            print(res1)
+            print(res2)
             left_x=(res1[0]*y_values**2+res1[1]*y_values+res1[2]).astype(int)
             right_x=(res2[0]*y_values**2+res2[1]*y_values+res2[2]).astype(int)
             center_x=(left_x+right_x)//2
-            #plt.imshow(image)
-            #plt.plot(left_x,y_values,color="red")
-            #plt.plot(right_x,y_values,color="red")
-            #plt.plot(center_x,y_values,color="green")
-            #plt.show()
+            """ plt.imshow(image)
+            plt.plot(left_x,y_values,color="red")
+            plt.plot(right_x,y_values,color="red")
+            plt.plot(center_x,y_values,color="green")
+            plt.show() """ 
             points=center_x.tolist()+y_values.tolist()
             center_lane_points=Int64MultiArray(data=points)
             publisher.publish(center_lane_points)
 
         except:
             pass
+            print("exception")
 
 	
        
@@ -70,7 +67,7 @@ class lane:
         margin=100
         minPixels=50
         window_height=np.int64(image.shape[0]//number_of_windows)
-        print(image.shape)
+        
         nonzero_y=np.nonzero(image)[0]
         nonzero_x=np.nonzero(image)[1]
     	
