@@ -68,54 +68,56 @@ class lane:
                         left_lane_points[1].append(y2)
                         
                 
+        try:
+            res1=np.polyfit(right_lane_points[1],right_lane_points[0],2)
+            res2=np.polyfit(left_lane_points[1],left_lane_points[0],2)
         
-        res1=np.polyfit(right_lane_points[1],right_lane_points[0],2)
-        res2=np.polyfit(left_lane_points[1],left_lane_points[0],2)
-        
-        right_lane_max_y=max(right_lane_points[1])
-        right_lane_min_y=min(right_lane_points[1])
+            right_lane_max_y=max(right_lane_points[1])
+            right_lane_min_y=min(right_lane_points[1])
         
         
         
-        y_values=np.linspace(right_lane_min_y,right_lane_max_y,10,dtype=int)
-        right_x=(res1[0]*y_values**2+res1[1]*y_values+res1[2]).astype(int)
-        left_x=(res2[0]*y_values**2+res2[1]*y_values+res2[2]).astype(int)
+            y_values=np.linspace(right_lane_min_y,right_lane_max_y,10,dtype=int)
+            right_x=(res1[0]*y_values**2+res1[1]*y_values+res1[2]).astype(int)
+            left_x=(res2[0]*y_values**2+res2[1]*y_values+res2[2]).astype(int)
         
-        for i in range(0,9):
-            x1=right_x[i].item()    #converting numpy.int64 to python int
-            y1=y_values[i].item()
-            x2=right_x[i+1].item()
-            y2=y_values[i+1].item()
+            for i in range(0,9):
+                    x1=right_x[i].item()    #converting numpy.int64 to python int
+                    y1=y_values[i].item()
+                    x2=right_x[i+1].item()
+                    y2=y_values[i+1].item()
         
-            cv.line(image,(x1,y1),(x2,y2),(0,0,255),2)
+                    cv.line(image,(x1,y1),(x2,y2),(0,0,255),2)
             
             
-            x1=left_x[i].item()    
-            y1=y_values[i].item()
-            x2=left_x[i+1].item()
-            y2=y_values[i+1].item()
+                    x1=left_x[i].item()    
+                    y1=y_values[i].item()
+                    x2=left_x[i+1].item()
+                    y2=y_values[i+1].item()
         
-            cv.line(image,(x1,y1),(x2,y2),(0,0,255),2)
-        
-        
+                    cv.line(image,(x1,y1),(x2,y2),(0,0,255),2)
         
         
-        x_values_center=((res1[0]*y_values**2+res1[1]*y_values+res1[2])+(res2[0]*y_values**2+res2[1]*y_values+res2[2]))//2
-        x_values_center=x_values_center.astype(int)			
         
-        for i in range(0,9):
-            x1=x_values_center[i].item()    #converting numpy.int64 to python int
-            y1=y_values[i].item()
-            x2=x_values_center[i+1].item()
-            y2=y_values[i+1].item()
         
-            cv.line(image,(x1,y1),(x2,y2),(0,255,0),2)
+            x_values_center=((res1[0]*y_values**2+res1[1]*y_values+res1[2])+(res2[0]*y_values**2+res2[1]*y_values+res2[2]))//2
+            x_values_center=x_values_center.astype(int)			
+        
+            for i in range(0,9):
+                    x1=x_values_center[i].item()    #converting numpy.int64 to python int
+                    y1=y_values[i].item()
+                    x2=x_values_center[i+1].item()
+                    y2=y_values[i+1].item()
+        
+                    cv.line(image,(x1,y1),(x2,y2),(0,255,0),2)
             
-        points=x_values_center.tolist()+y_values.tolist()
-        center_lane_points=Int64MultiArray(data=points)
-        publisher.publish(center_lane_points)
+            points=x_values_center.tolist()+y_values.tolist()
+            center_lane_points=Int64MultiArray(data=points)
+            publisher.publish(center_lane_points)
+            print("Lane Detected !")
         
-        
+        except:
+            pass
             
         return image
     	
@@ -131,7 +133,7 @@ def convertImage(msg):
      
 
 def detect_lane(img):
-    detect=lane([173,29],[27,103],[389,29],[585,141])
+    detect=lane([156.5,71.76],[13.738,114.55],[371.743,64.215],[546.655,126.504])
     img=img[240:480,10:640]
     
     img=detect.perspective(img)
@@ -182,4 +184,4 @@ if __name__=='__main__':
     main()
     
     
-  
+"""   lane([173,29],[27,103],[389,29],[585,141])"""
