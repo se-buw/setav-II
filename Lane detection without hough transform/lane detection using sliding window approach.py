@@ -120,11 +120,12 @@ class lane:
 def detect_lane(img):
     
     print("est")
-    img=img[240:480,10:640]
-    detect=lane([93.015,5.0718],[19.401,183.7595],[499.467,4.4426],[543.509,185.0179])
+    img=img[160:480,:640]
+    detect=lane([189.720,39.405],[22.896   ,163.403],[387.862    ,40.044],[ 559.159 ,158.290])
     img=detect.perspective(img)
     image=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
-    
+    """cv.imshow("OUtput",image)
+    cv.waitKey(5000)"""
     
     #image=lane.convertImage(msg)
    
@@ -142,6 +143,7 @@ def detect_lane(img):
 def convertImage(msg):
         
 		image=CvBridge().compressed_imgmsg_to_cv2(msg)
+    
 		detect_lane(image)
     
 def main(args=None):
