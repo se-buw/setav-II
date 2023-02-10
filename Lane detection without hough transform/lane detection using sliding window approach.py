@@ -147,8 +147,6 @@ def convertImage(msg):
 		mtx=np.array([[310.05107829,0.,293.37649276],[  0.,309.51905673,254.25816031],[0.,0.,1.]])
 		dist=np.array([[-4.67303364e-01,2.26729559e-01,-3.79303222e-04,1.20996005e-04,-5.25339796e-02]])
 		image= cv.undistort(image, mtx, dist, None, None)
-		cv.imshow("Output",image)
-		cv.waitKey(2000)
     
 		detect_lane(image)
     
