@@ -49,6 +49,8 @@ class Keyboard_control_pub(Node):
         elif key == keyboard.Key.right:     # turn right 
             self.message_text = "turn_right"
         elif key == keyboard.Key.enter:     # set current wheel angle to zero 
+            self.message_text = "check_zero"
+        elif key == keyboard.Key.tab:     # set current wheel angle to zero 
             self.message_text = "set_zero"
         elif key == keyboard.Key.space:     # stop 
             self.message_text = "stop"

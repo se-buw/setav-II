@@ -20,10 +20,13 @@ def on_press(key):
         print('\nright')
         car.turn("right")
     elif key == keyboard.Key.ctrl:      # print wheel angle 
-        print('\nangle:',car.get_angle)
+        print('\nangle:',car.get_angle())
     elif key == keyboard.Key.enter:     # set current wheel angle to zero 
         print('\nenter')
         car.set_zero()
+    elif key == keyboard.Key.tab:     # set current wheel angle to zero 
+        print('\ntab')
+        car.turn_to_zero()
     elif key == keyboard.Key.space:     # stop 
         print('\nspace')
         car.stop()
