@@ -33,7 +33,7 @@ class lane:
     def drawLines(self,leftx,lefty,rightx,righty,image):
         	
     	
-        y_values=np.linspace(0,image.shape[0]-1,image.shape[0],dtype=int)
+        y_values=np.linspace(image.shape[0]-1,0,image.shape[0],dtype=int)
         try:
             res1=np.polyfit(lefty,leftx,2)
             res2=np.polyfit(righty,rightx,2)
@@ -120,11 +120,13 @@ class lane:
 def detect_lane(img):
     
     print("est")
-    img=img[240:480,10:640]
-    detect=lane([93.015,5.0718],[19.401,183.7595],[499.467,4.4426],[543.509,185.0179])
+    img=img[160:480,:640]
+    detect=lane([189.720,39.405],[22.896,303.403],[387.862    ,40.044],[ 559.159 ,298.290])
     img=detect.perspective(img)
+    cv.imwrite("image.jpg",img)
     image=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
-    
+    """cv.imshow("OUtput",image)
+    cv.waitKey(5000)"""
     
     #image=lane.convertImage(msg)
    
@@ -142,6 +144,10 @@ def detect_lane(img):
 def convertImage(msg):
         
 		image=CvBridge().compressed_imgmsg_to_cv2(msg)
+		mtx=np.array([[310.05107829,0.,293.37649276],[  0.,309.51905673,254.25816031],[0.,0.,1.]])
+		dist=np.array([[-4.67303364e-01,2.26729559e-01,-3.79303222e-04,1.20996005e-04,-5.25339796e-02]])
+		image= cv.undistort(image, mtx, dist, None, None)
+    
 		detect_lane(image)
     
 def main(args=None):
