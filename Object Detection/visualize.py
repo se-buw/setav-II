@@ -1,5 +1,4 @@
 import torch
-from utils.plots import plot_one_box
 from utils.general import scale_coords
 import cv2
 

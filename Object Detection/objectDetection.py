@@ -3,7 +3,6 @@ import cv2 as cv
 import torch
 from models.experimental import attempt_load
 from utils.general import non_max_suppression
-from utils.torch_utils import load_classifier
 import visualize
 from multiprocessing import Process
 import rclpy
