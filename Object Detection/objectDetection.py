@@ -2,17 +2,13 @@ import numpy as np
 import cv2 as cv
 import torch
 from models.experimental import attempt_load
-from utils.general import check_img_size, non_max_suppression, apply_classifier
+from utils.general import non_max_suppression
 from utils.torch_utils import load_classifier
 import visualize
 from multiprocessing import Process
 import rclpy
 from cv_bridge import CvBridge
-from sensor_msgs.msg import CompressedImage
-from sensor_msgs.msg import PointCloud2,LaserScan
-import laser_geometry.laser_geometry as lg
-import math
-import os
+
 
 
 class ObjectDetection:
