@@ -19,8 +19,6 @@ class ObjectDetection:
 
 
 	model = attempt_load("yolov7.pt", map_location="cpu")  # load FP32 model
-	stride = int(model.stride.max())  # model stride
-	imgsz = check_img_size(640, s=stride)  # check img_size
 	names = model.module.names if hasattr(model, 'module') else model.names
 	colors = [[np.random.randint(0, 255) for _ in range(3)] for _ in names]	
 

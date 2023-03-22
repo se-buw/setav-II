@@ -6,7 +6,7 @@ from message_filters import Subscriber, ApproximateTimeSynchronizer
 import lidar
 from objectDetection import ObjectDetection
 import math
-class MyNode(Node):
+class Fusion(Node):
     def __init__(self):
         super().__init__('my_node')
         
@@ -19,6 +19,7 @@ class MyNode(Node):
         # do something with the messages
         
         image_points,ranges=lidar.test(lidar_msg)
+       
         
         output_image,c1,c2=ObjectDetection.callback(img_msg)
         lidar_points=[]
@@ -53,7 +54,7 @@ class MyNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MyNode()
+    node = Fusion()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()

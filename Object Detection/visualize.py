@@ -22,12 +22,15 @@ def visualize(im0s,pred,img,names,colors):
 
 				if True: 		 # Add bbox to image
 					label = f'{names[int(cls)]} {conf:.2f}'
+					c1,c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
+					cv2.rectangle(im0, c1, c2, (255,0,0), 1)
 					
-					plot_one_box(xyxy, im0, label=label, color=colors[int(cls)], line_thickness=1)
+					
+					cv2.putText(im0,label,(c1[0],c1[1]-2),0,1,(255,255,0),1,cv2.LINE_AA)
 
 	
 		
-		number=random.randint(0,1000)
-		cv2.imwrite("./output/output"+str(number)+".jpg", im0)
+		
+		return im0,c1,c2
 			
 
