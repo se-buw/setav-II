@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/PKG-INFO
+../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/SOURCES.txt
+../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/dependency_links.txt
+../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/entry_points.txt
+../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/requires.txt
+../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/top_level.txt
+../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/zip-safe
+lane_detection_sliding_window/__init__.py
+lane_detection_sliding_window/lane.py
+resource/lane_detection_sliding_window
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py
