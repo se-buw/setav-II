@@ -1,0 +1,37 @@
+running egg_info
+creating ../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info
+writing ../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/PKG-INFO
+writing dependency_links to ../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/dependency_links.txt
+writing entry points to ../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/entry_points.txt
+writing requirements to ../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/requires.txt
+writing top-level names to ../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/top_level.txt
+writing manifest file '../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/SOURCES.txt'
+reading manifest file '../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/SOURCES.txt'
+writing manifest file '../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/gstark/lane_normal/build/lane_detection_hough_transform/build
+creating /home/gstark/lane_normal/build/lane_detection_hough_transform/build/lib
+creating /home/gstark/lane_normal/build/lane_detection_hough_transform/build/lib/lane_detection_hough_transform
+copying lane_detection_hough_transform/laneDetection.py -> /home/gstark/lane_normal/build/lane_detection_hough_transform/build/lib/lane_detection_hough_transform
+copying lane_detection_hough_transform/__init__.py -> /home/gstark/lane_normal/build/lane_detection_hough_transform/build/lib/lane_detection_hough_transform
+running install
+/usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running install_lib
+creating /home/gstark/lane_normal/install/lane_detection_hough_transform/lib/python3.10/site-packages/lane_detection_hough_transform
+copying /home/gstark/lane_normal/build/lane_detection_hough_transform/build/lib/lane_detection_hough_transform/laneDetection.py -> /home/gstark/lane_normal/install/lane_detection_hough_transform/lib/python3.10/site-packages/lane_detection_hough_transform
+copying /home/gstark/lane_normal/build/lane_detection_hough_transform/build/lib/lane_detection_hough_transform/__init__.py -> /home/gstark/lane_normal/install/lane_detection_hough_transform/lib/python3.10/site-packages/lane_detection_hough_transform
+byte-compiling /home/gstark/lane_normal/install/lane_detection_hough_transform/lib/python3.10/site-packages/lane_detection_hough_transform/laneDetection.py to laneDetection.cpython-310.pyc
+byte-compiling /home/gstark/lane_normal/install/lane_detection_hough_transform/lib/python3.10/site-packages/lane_detection_hough_transform/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/gstark/lane_normal/install/lane_detection_hough_transform/share/ament_index
+creating /home/gstark/lane_normal/install/lane_detection_hough_transform/share/ament_index/resource_index
+creating /home/gstark/lane_normal/install/lane_detection_hough_transform/share/ament_index/resource_index/packages
+copying resource/lane_detection_hough_transform -> /home/gstark/lane_normal/install/lane_detection_hough_transform/share/ament_index/resource_index/packages
+copying package.xml -> /home/gstark/lane_normal/install/lane_detection_hough_transform/share/lane_detection_hough_transform
+running install_egg_info
+Copying ../../build/lane_detection_hough_transform/lane_detection_hough_transform.egg-info to /home/gstark/lane_normal/install/lane_detection_hough_transform/lib/python3.10/site-packages/lane_detection_hough_transform-0.0.0-py3.10.egg-info
+running install_scripts
+Installing lane_detector script to /home/gstark/lane_normal/install/lane_detection_hough_transform/lib/lane_detection_hough_transform
+writing list of installed files to '/home/gstark/lane_normal/build/lane_detection_hough_transform/install.log'
