@@ -6,6 +6,7 @@ from message_filters import Subscriber, ApproximateTimeSynchronizer
 import lidar
 from objectDetection import ObjectDetection
 import math
+from std_msgs.msg import String
 import numpy as np
 class Fusion(Node):
     def __init__(self):
@@ -13,7 +14,11 @@ class Fusion(Node):
         
         self.subscriber1 = Subscriber(self,CompressedImage, '/image_raw/compressed')
         self.subscriber2 = Subscriber(self, LaserScan, '/scan_filtered')
-        self.approx_sync = ApproximateTimeSynchronizer([self.subscriber1, self.subscriber2], 10,2)
+        publisher_node=rclpy.create_node("Detected_objects_publisher")
+        global publisher
+        publisher=publisher_node.create_publisher(String,"detected_objects",10)
+        
+        self.approx_sync = ApproximateTimeSynchronizer([self.subscriber1, self.subscriber2], 10,20000)
         self.approx_sync.registerCallback(self.callback)
 
     def callback(self, img_msg, lidar_msg):
@@ -23,7 +28,7 @@ class Fusion(Node):
        
         
         output_image,detected_object_points=ObjectDetection.callback(img_msg)
-        
+        final_output=[]
         for k in range(len(detected_object_points)):
         	lidar_points=[]
         	final_ranges=[]
@@ -58,8 +63,13 @@ class Fusion(Node):
         		distance_of_object=round(sum(final_ranges)/len(final_ranges),2)
         
        			cv.putText(output_image,str(distance_of_object)+"m",(c2[0]-3,c2[1]-4),0,0.5,(255,255,0),1,cv.LINE_AA)
+       			final_output.append([c1,c2,distance_of_object])
        			
-       			
+       	
+       	msg=String()
+       	msg.data=str(final_output)
+       	
+       	publisher.publish(msg)     				
         cv.imshow("OUtput",output_image)
         cv.waitKey(4000)
 
@@ -67,6 +77,7 @@ def main(args=None):
     rclpy.init(args=args)
     node = Fusion()
     rclpy.spin(node)
+    
     node.destroy_node()
     rclpy.shutdown()
 
