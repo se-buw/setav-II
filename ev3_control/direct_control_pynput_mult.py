@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 from pynput import keyboard
 from ev3_control import Car 
 motor_speed = 100
@@ -47,8 +48,12 @@ def on_release(key):
         return False
 
 if __name__ == '__main__':
+    if sys.argv[1]!='':
+        ip = sys.argv[1]
+    else: ip = '192.168.1.111'
+    print(ip)
     global car
-    car = Car()
+    car = Car(ip)
     # Collect events until released
     with keyboard.Listener( on_press=on_press, on_release=on_release) as listener:
         listener.join()

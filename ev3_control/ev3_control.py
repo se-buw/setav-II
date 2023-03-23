@@ -4,31 +4,11 @@ import rpyc
 from ev3dev.ev3 import *
 from curtsies import Input
 
-# class Car():
-#     def __init__(self) -> None:
-#         print("initiated car")
-
-#     def turn(self, direction): 
-#         if direction == "left":
-#             print("turn left") 
-#         elif direction == "right":
-#             print("turn right")
-
-#     def move(self,speed):
-#         print("move")
-
-#     def stop(self):
-#         print("stop")
-
-#     def get_angle(self):
-#         return 20
-
-#     def set_zero(self):
-#         print("set zero")
 
 class Car():
-    def __init__(self) -> None:
-        conn = rpyc.classic.connect('192.168.1.108')  # use default TCP port (18812) WIFI:jor: 192.168.0.106 USB:10.42.0.232
+    def __init__(self,ip) -> None:
+        #ip='192.168.1.108'
+        conn = rpyc.classic.connect(ip)  # use default TCP port (18812) WIFI:jor: 192.168.0.106 USB:10.42.0.232
         ev3 = conn.modules['ev3dev.ev3']
         self.motor_A = ev3.LargeMotor('outA')    # 
         self.motor_B = ev3.LargeMotor('outB')
