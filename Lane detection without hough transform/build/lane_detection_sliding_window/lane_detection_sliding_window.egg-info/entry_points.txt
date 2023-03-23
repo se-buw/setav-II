@@ -1,0 +1,3 @@
+[console_scripts]
+lane_detector = lane_detection_sliding_window.lane:main
+

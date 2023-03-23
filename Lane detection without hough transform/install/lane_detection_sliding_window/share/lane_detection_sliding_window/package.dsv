@@ -1,0 +1,6 @@
+source;share/lane_detection_sliding_window/hook/pythonpath.ps1
+source;share/lane_detection_sliding_window/hook/pythonpath.dsv
+source;share/lane_detection_sliding_window/hook/pythonpath.sh
+source;share/lane_detection_sliding_window/hook/ament_prefix_path.ps1
+source;share/lane_detection_sliding_window/hook/ament_prefix_path.dsv
+source;share/lane_detection_sliding_window/hook/ament_prefix_path.sh

@@ -34,9 +34,9 @@ for fname in images:
         cv.waitKey(300)
 
 ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
-
-output=cv.Rodrigues(rvecs[0])
-result=np.concatenate((output[0],tvecs[0]),axis=1)
+print(rvecs)
+output=cv.Rodrigues(rvecs[16])
+result=np.concatenate((output[0],tvecs[16]),axis=1)
 result=np.concatenate([result,[np.array([0,0,0,1])]])
 arr=np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0]])
 projection_matrix=np.dot(np.dot(mtx,arr),result)

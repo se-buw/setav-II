@@ -1,0 +1,6 @@
+source;share/lane_detection_hough_transform/hook/pythonpath.ps1
+source;share/lane_detection_hough_transform/hook/pythonpath.dsv
+source;share/lane_detection_hough_transform/hook/pythonpath.sh
+source;share/lane_detection_hough_transform/hook/ament_prefix_path.ps1
+source;share/lane_detection_hough_transform/hook/ament_prefix_path.dsv
+source;share/lane_detection_hough_transform/hook/ament_prefix_path.sh

@@ -2,25 +2,18 @@ import numpy as np
 import cv2 as cv
 import torch
 from models.experimental import attempt_load
-from utils.general import check_img_size, non_max_suppression, apply_classifier
-from utils.torch_utils import load_classifier
+from utils.general import non_max_suppression
 import visualize
 from multiprocessing import Process
 import rclpy
 from cv_bridge import CvBridge
-from sensor_msgs.msg import CompressedImage
-from sensor_msgs.msg import PointCloud2,LaserScan
-import laser_geometry.laser_geometry as lg
-import math
-import os
+
 
 
 class ObjectDetection:
 
 
 	model = attempt_load("yolov7.pt", map_location="cpu")  # load FP32 model
-	stride = int(model.stride.max())  # model stride
-	imgsz = check_img_size(640, s=stride)  # check img_size
 	names = model.module.names if hasattr(model, 'module') else model.names
 	colors = [[np.random.randint(0, 255) for _ in range(3)] for _ in names]	
 
