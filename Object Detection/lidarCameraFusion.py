@@ -6,6 +6,7 @@ from message_filters import Subscriber, ApproximateTimeSynchronizer
 import lidar
 from objectDetection import ObjectDetection
 import math
+import numpy as np
 class Fusion(Node):
     def __init__(self):
         super().__init__('my_node')
@@ -21,36 +22,46 @@ class Fusion(Node):
         image_points,ranges=lidar.test(lidar_msg)
        
         
-        output_image,c1,c2=ObjectDetection.callback(img_msg)
-        lidar_points=[]
-        final_ranges=[]
-        x1=c1[0]
-        y1=c1[1]
-        x2=c2[0]
-        y2=c2[1]
-        for j,i in enumerate(image_points):
-        	if ((i[0]>=x1 and i[0]<=x2) and (i[1]>=y1 and i[1]<=y2)):
-        		lidar_points.append((int(i[0]),int(i[1])))
-        		x=ranges[j][0]
-        		y=ranges[j][1]
-        		distance=math.sqrt((x**2+y**2))
-        		final_ranges.append(distance)
+        output_image,detected_object_points=ObjectDetection.callback(img_msg)
+        
+        for k in range(len(detected_object_points)):
+        	lidar_points=[]
+        	final_ranges=[]
+        	c1=detected_object_points[k][0]
+        	c2=detected_object_points[k][1]
+       
+        	x1=c1[0]
+        	y1=c1[1]
+        	x2=c2[0]
+        	y2=c2[1]
+        	for j,i in enumerate(image_points):
+        		if ((i[0]>=x1 and i[0]<=x2) and (i[1]>=y1 and i[1]<=y2)):
+        			lidar_points.append((int(i[0]),int(i[1])))
+        			x=ranges[j][0]
+        			y=ranges[j][1]
+        			distance=math.sqrt((x**2+y**2))
+        			final_ranges.append(distance)
         		
-        	else:
-        		lidar_points.append((int(i[0]),int(i[1])))  
-        		x=ranges[j][0] # have to remoove this finally as we need to draw lidar points only inside the box
-        		y=ranges[j][1]
-        		distance=math.sqrt((x**2+y**2))
-        		final_ranges.append(distance)
+        		else:
+        			lidar_points.append((int(i[0]),int(i[1])))
+        			x=ranges[j][0]
+        			y=ranges[j][1]
+        			distance=math.sqrt((x**2+y**2))
+        			
         
-        for i in lidar_points:
-        	cv.circle(output_image,i,2,(0,0,255),2)
+	
+        	for i in lidar_points:
+        		cv.circle(output_image,i,2,(0,0,255),2)
         
-        distance_of_object=round(sum(final_ranges)/len(final_ranges),2)
+        	if (len(final_ranges)!=0):
         
-        cv.putText(output_image,str(distance_of_object)+"m",(c1[0]-3,c1[1]-4),0,1,(255,255,0),1,cv.LINE_AA)
+        		distance_of_object=round(sum(final_ranges)/len(final_ranges),2)
+        
+       			cv.putText(output_image,str(distance_of_object)+"m",(c2[0]-3,c2[1]-4),0,0.5,(255,255,0),1,cv.LINE_AA)
+       			
+       			
         cv.imshow("OUtput",output_image)
-        cv.waitKey(1000)
+        cv.waitKey(4000)
 
 def main(args=None):
     rclpy.init(args=args)
