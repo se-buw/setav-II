@@ -1,4 +1,4 @@
-LANE DETECTION USING HOUGH TRANSFORM
+**LANE DETECTION USING HOUGH TRANSFORM**
 
 This ROS2 package can be used to detect the lanes using hough transformation method.
 
