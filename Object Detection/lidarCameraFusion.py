@@ -13,7 +13,7 @@ class Fusion(Node):
         
         self.subscriber1 = Subscriber(self,CompressedImage, '/image_raw/compressed')
         self.subscriber2 = Subscriber(self, LaserScan, '/scan_filtered')
-        self.approx_sync = ApproximateTimeSynchronizer([self.subscriber1, self.subscriber2], 10, 30000)
+        self.approx_sync = ApproximateTimeSynchronizer([self.subscriber1, self.subscriber2], 10,2)
         self.approx_sync.registerCallback(self.callback)
 
     def callback(self, img_msg, lidar_msg):
