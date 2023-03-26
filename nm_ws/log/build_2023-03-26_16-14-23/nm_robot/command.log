@@ -1,0 +1,4 @@
+Invoking command in '/home/zane/nm_ws/build/nm_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/zane/em_ws/install/my_robot_controller:/opt/ros/humble /usr/bin/cmake --build /home/zane/nm_ws/build/nm_robot -- -j4 -l4
+Invoked command in '/home/zane/nm_ws/build/nm_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/zane/em_ws/install/my_robot_controller:/opt/ros/humble /usr/bin/cmake --build /home/zane/nm_ws/build/nm_robot -- -j4 -l4
+Invoking command in '/home/zane/nm_ws/build/nm_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/zane/em_ws/install/my_robot_controller:/opt/ros/humble /usr/bin/cmake --install /home/zane/nm_ws/build/nm_robot
+Invoked command in '/home/zane/nm_ws/build/nm_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/zane/em_ws/install/my_robot_controller:/opt/ros/humble /usr/bin/cmake --install /home/zane/nm_ws/build/nm_robot
