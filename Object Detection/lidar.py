@@ -26,17 +26,19 @@ def save(msg):
 
 	gen=point_cloud2.read_points(msg,field_names = ("x", "y", "z"), skip_nans=False)
 	for p in gen:
-		"""
-		projection_matrix=np.array([[ 4.10887273e+02,-2.24133502e+01,1.13449233e+02,17.15941827e+02],
- 		[ 1.15310118e+02,2.51585852e+02,2.89581412e+02,1.13198914e+03],
- 		[ 4.64931601e-01,-1.96191343e-01,8.63335139e-01,7.11292144e+00]])"""
-		projection_matrix=np.array([[ 3.80674031e+02,-1.13763053e+02 , 1.56034251e+02 , 1.66550161e+03],
- [ 7.98412750e+01 , 1.22816512e+02  ,3.72814611e+02 , 1.39583343e+03],
- [ 2.84812786e-01, -5.33151264e-01 , 7.96637563e-01 , 9.04908883e+00]])
-		objpoints=np.array([p[0],p[1],p[2],1])
+		
+		
+		projection_matrix=np.array([[-8.30957415e+03 , 0.00000000e+00 , 5.08386041e+02 , 3.50696674e+04],
+ [ 0.00000000e+00 ,-8.44691438e+03 , 3.82024835e+02 , 2.16519617e+04],
+ [ 0.00000000e+00,  0.00000000e+00 , 6.26181567e-01 , 8.90042603e+01]])/89.0042603
+		
+			
+		objpoints=np.array([p[1],p[0],p[2],1])
 		ranges.append(p)
 		output=np.dot(projection_matrix,objpoints)
 		output=output/output[2]
+		if (p[1]>0):
+			output[0]=output[0]-320
 		image_points.append(output)
 	
 	return image_points,ranges
