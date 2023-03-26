@@ -8,6 +8,14 @@ from rclpy.node import Node
 from ev3dev.ev3 import *
 from std_msgs.msg import String
 
+# Priority management:
+# default priority of control (priority_level =2)
+#       ros2 run car_control_publisher listener
+# Manual control through ROS2 priority_level =1:
+#       ros2 run car_control_publisher listener --ros-args -p priority_level:=1
+# Direct control of EV3 priority_level =0:
+#       ros2 run car_control_publisher listener --ros-args -p priority_level:=0
+
 # Start real usage:
 #       ros2 run car_control_publisher listener
 # To start emulated car:
@@ -34,13 +42,26 @@ class Keyboard_control_sub(Node):
     def __init__(self):
         super().__init__('keyboard_control_subscriber')
 
+
         # Choose car type, default: emulation = False
         self.declare_parameter('emulation', False)
         emulation = self.get_parameter('emulation').get_parameter_value().bool_value
         if emulation == True:
             self.car=Emulated_Car()
         else:
-            self.car=Car()
+            # Choose pripority_level, default: pripority_level = 2
+            self.declare_parameter('pripority_level', 2)
+            self.pripority_level = self.get_parameter('pripority_level').get_parameter_value().integer_value
+            if self.pripority_level == 2:
+                print ("switch to default automatic control (priority level=2)")
+                self.car=Car()
+            elif self.pripority_level == 1:
+                print ("switch to remote control (priority level=1)")
+                self.car=Car()
+            elif self.pripority_level == 0:
+                print ("switch to direct control (priority level=0)")
+
+        
 
         self.subscription = self.create_subscription(String,'ev3_control_topic',self.listener_callback,10)
         self.subscription  # prevent unused variable warning

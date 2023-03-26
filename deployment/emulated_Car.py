@@ -24,6 +24,7 @@ class Emulated_Car():
         print("stop steering motors")
 
     def get_angle(self):
+        print("get_angle")
         return 20
 
     def set_zero(self):

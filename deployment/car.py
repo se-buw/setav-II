@@ -4,10 +4,10 @@ import rpyc
 
 # real car class with EV3
 class Car():
-    def __init__(self) -> None:
+    def __init__(self,ip) -> None:
         # Setup connections:
-        conn = rpyc.classic.connect('192.168.1.108')  # use default TCP port (18812) WIFI:jor: 192.168.0.106 USB:10.42.0.232
-        ev3 = conn.modules['ev3dev.ev3']
+        self.conn = rpyc.classic.connect(ip)  # use default TCP port (18812) WIFI:jor: 192.168.0.106 USB:10.42.0.232
+        ev3 = self.conn.modules['ev3dev.ev3']
 
         # Set motors outputs:
         self.motor_A = ev3.LargeMotor('outA')    
@@ -23,6 +23,12 @@ class Car():
 
         print("initiated car")
         # self.start_steering(self)
+
+    def destroy(self):
+        try:
+            self.conn.root.stop()
+        except:
+            print("Server was closed")
 
 
     # infinite move with chosen speed forward (+) or backward (-)
@@ -77,7 +83,7 @@ class Car():
         print("stop steering motor")
         self.motor_C.stop()
 
-    # receive wheels angle position - NOT IMPLEMENTED 
+    # receive wheels angle position - NOT IMPLEMENTED YET
     def get_angle(self):
         return self.motor_C.position
 
