@@ -32,6 +32,7 @@ class Fusion(Node):
         for k in range(len(detected_object_points)):
         	lidar_points=[]
         	final_ranges=[]
+        	updated_ranges=[]
         	c1=detected_object_points[k][0]
         	c2=detected_object_points[k][1]
        
@@ -44,6 +45,7 @@ class Fusion(Node):
         			lidar_points.append((int(i[0]),int(i[1])))
         			x=ranges[j][0]
         			y=ranges[j][1]
+        			updated_ranges.append(ranges[j])
         			distance=math.sqrt((x**2+y**2))
         			final_ranges.append(distance)
         		
@@ -63,7 +65,7 @@ class Fusion(Node):
         		distance_of_object=round(sum(final_ranges)/len(final_ranges),2)
         
        			cv.putText(output_image,str(distance_of_object)+"m",(c2[0]-3,c2[1]-4),0,0.5,(255,255,0),1,cv.LINE_AA)
-       			final_output.append([c1,c2,distance_of_object])
+       			final_output.append([c1,c2,updated_ranges])
        			
        	
        	msg=String()
