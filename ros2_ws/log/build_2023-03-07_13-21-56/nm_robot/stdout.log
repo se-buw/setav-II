@@ -1,0 +1,56 @@
+-- The C compiler identification is GNU 11.3.0
+-- The CXX compiler identification is GNU 11.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ament_cmake: 1.3.3 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found Python3: /usr/bin/python3.10 (found version "3.10.6") found components: Interpreter 
+-- Override CMake install command with custom implementation using symlinks instead of copying resources
+-- Found ament_lint_auto: 0.12.5 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'copyright' to check source files copyright and LICENSE
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zane/nm_ws/build/nm_robot
+-- Install configuration: ""
+-- Execute custom install script
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/config/drive_bot.rviz
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/config/empty.yaml
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/config/mapper_params_online_async.yaml
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/config/view_bot.rviz
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/description/camera.xacro
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/description/gazebo_control.xacro
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/description/inertial_macros.xacro
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/description/lidar.xacro
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/description/robot.urdf.xacro
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/description/robot_core.xacro
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/launch/launch_sim.launch.py
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/launch/rplidar.launch.py
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/launch/rsp.launch.py
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/worlds/empty.world
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/worlds/testlayout.world
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/ament_index/resource_index/package_run_dependencies/nm_robot
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/ament_index/resource_index/parent_prefix_path/nm_robot
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/environment/ament_prefix_path.sh
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/environment/ament_prefix_path.dsv
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/environment/path.sh
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/environment/path.dsv
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/local_setup.bash
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/local_setup.sh
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/local_setup.zsh
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/local_setup.dsv
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/package.dsv
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/ament_index/resource_index/packages/nm_robot
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/cmake/nm_robotConfig.cmake
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/cmake/nm_robotConfig-version.cmake
+-- Symlinking: /home/zane/nm_ws/install/nm_robot/share/nm_robot/package.xml

@@ -1,0 +1,1 @@
+/home/zane/nm_ws/build/nm_robot/ament_cmake_environment_hooks/local_setup.sh

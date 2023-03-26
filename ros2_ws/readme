@@ -1,0 +1,43 @@
+cd rt_ws/
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch nm_robot rsp.launch.py
+ros2 run joint_state_publisher_gui joint_state_publisher_gui
+
+rviz2 -d src/nm_robot/config/view_bot.rviz
+ros2 launch nm_robot rsp.launch.py use_sim_time:=true
+ros2 launch gazebo_ros gazebo.launch.py
+ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity bot_name
+
+ros2 launch nm_robot launch_sim.launch.py
+ros2 launch nm_robot launch_sim.launch.py world:=./src/nm_robot/worlds/testlayout.world
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
+teleop_twist_joy -- teleop_node
+joy -- joy_node
+
+SSH
+cd rt_ws/
+ssh robot@192.168.8.52
+Ros Lidar Driver: Sudo apt install ros-humble-rplidar-ros
+
+
+Setting parameters serial port, frame_id, angle_compensate, scan_mode
+cd..
+
+ros2 run rplidar_ros rplidar_composition --ros-args -p serials_port:=/dev/ttyUSB0 -p frame_id:=laser_frame -p angle_compensate:=true -p scan_mode:=Standard
+
+for serial port:
+cd ..
+ls /dev/serial/
+ls /dev/serial/by-id
+ls /dev/serial/by-id
+
+For Lidar:
+cd rt_ws/
+ros2 service call
+select empty message and give {}
+
+
+To Kill open new terminal
+killall rplidar_composition

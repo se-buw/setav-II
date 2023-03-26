@@ -1,4 +1,0 @@
-[31mCMake Error at CMakeLists.txt:14 (install):
-  install does not recognize sub-command   DIRECTORY
-
-[0m
