@@ -1,4 +1,4 @@
-cd rt_ws/
+cd nm_ws/
 colcon build --symlink-install
 source install/setup.bash
 ros2 launch nm_robot rsp.launch.py
@@ -17,7 +17,7 @@ teleop_twist_joy -- teleop_node
 joy -- joy_node
 
 SSH
-cd rt_ws/
+cd nm_ws/
 ssh robot@192.168.8.52
 Ros Lidar Driver: Sudo apt install ros-humble-rplidar-ros
 
@@ -34,7 +34,7 @@ ls /dev/serial/by-id
 ls /dev/serial/by-id
 
 For Lidar:
-cd rt_ws/
+cd nm_ws/
 ros2 service call
 select empty message and give {}
 
