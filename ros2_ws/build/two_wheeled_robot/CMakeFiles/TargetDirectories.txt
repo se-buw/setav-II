@@ -1,9 +1,0 @@
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/uninstall.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/two_wheeled_robot_uninstall.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/test.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/edit_cache.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/rebuild_cache.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/list_install_components.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/install.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/install/local.dir
-/home/selab/ros2_ws/build/two_wheeled_robot/CMakeFiles/install/strip.dir
