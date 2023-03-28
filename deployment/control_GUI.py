@@ -12,7 +12,7 @@ os.system('xset r off')
 
 def create_main_window():
     root = tk.Tk()
-    root.title('Replace')
+    root.title('SETAV-2 Control interface')
     root.resizable(0, 0)
 
     # add Key capture

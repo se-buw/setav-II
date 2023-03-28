@@ -5,13 +5,10 @@ from PIL import ImageTk,Image
 import os
 import time
 
-from  control_interface import Control_interface
-from  setup_interface   import Setup_interface
+# from  control_frame import Control_interface
+# from  setup_frame   import Setup_interface
 
 os.system('xset r off')
-
-def return_pressed(event):
-    print('Return key pressed.')
 
 
 class Image_frame():
@@ -25,8 +22,12 @@ class Image_frame():
         self.canvas.pack(fill='both',expand = True)
         self.img_id=self.canvas.create_image(400,300,image=self.img)
         self.canvas.pack(anchor=tk.CENTER, expand=True)
-        ttk.Button(image_frame, text='reload', command=lambda: self.reload_image(root)).pack()
-        image_frame.grid(column=0, row=0)
+        ttk.Button(image_frame, text='Pause', command=lambda: self.reload_image(root)).pack()
+        image_frame.grid(column=0, row=1)
+        ttk.Button(image_frame, text='Continue', command=lambda: self.reload_image(root)).pack()
+        image_frame.grid(column=1, row=1)
+        ttk.Button(image_frame, text='Next', command=lambda: self.reload_image(root)).pack()
+        image_frame.grid(column=2, row=1)
 
     def reload_image(self,root):
         self.canvas.destroy()
@@ -36,7 +37,7 @@ class Image_frame():
 
 def create_main_window():
     root = tk.Tk()
-    root.title('Replace')
+    root.title('Monitor interface SETAV-2')
     root.resizable(0, 0)
 
     # layout on the root window
