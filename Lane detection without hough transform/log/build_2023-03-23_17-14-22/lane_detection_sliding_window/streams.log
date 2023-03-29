@@ -1,0 +1,26 @@
+[1.101s] Invoking command in '/home/gstark/SETAV project/setav-II/Lane detection without hough transform/lane_detection_sliding_window': PYTHONPATH=/home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/prefix_override:/home/gstark/SETAV project/setav-II/Lane detection without hough transform/install/lane_detection_sliding_window/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/lane_detection_sliding_window build --build-base /home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/build install --record /home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/install.log --single-version-externally-managed
+[1.573s] running egg_info
+[1.575s] writing ../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/PKG-INFO
+[1.575s] writing dependency_links to ../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/dependency_links.txt
+[1.575s] writing entry points to ../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/entry_points.txt
+[1.575s] writing requirements to ../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/requires.txt
+[1.576s] writing top-level names to ../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/top_level.txt
+[1.579s] reading manifest file '../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/SOURCES.txt'
+[1.581s] writing manifest file '../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info/SOURCES.txt'
+[1.581s] running build
+[1.582s] running build_py
+[1.582s] copying lane_detection_sliding_window/lane.py -> /home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/build/lib/lane_detection_sliding_window
+[1.582s] running install
+[1.583s] /usr/lib/python3/dist-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+[1.583s]   warnings.warn(
+[1.583s] running install_lib
+[1.585s] copying /home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/build/lib/lane_detection_sliding_window/lane.py -> /home/gstark/SETAV project/setav-II/Lane detection without hough transform/install/lane_detection_sliding_window/lib/python3.10/site-packages/lane_detection_sliding_window
+[1.586s] byte-compiling /home/gstark/SETAV project/setav-II/Lane detection without hough transform/install/lane_detection_sliding_window/lib/python3.10/site-packages/lane_detection_sliding_window/lane.py to lane.cpython-310.pyc
+[1.589s] running install_data
+[1.590s] running install_egg_info
+[1.593s] removing '/home/gstark/SETAV project/setav-II/Lane detection without hough transform/install/lane_detection_sliding_window/lib/python3.10/site-packages/lane_detection_sliding_window-0.0.0-py3.10.egg-info' (and everything under it)
+[1.594s] Copying ../build/lane_detection_sliding_window/lane_detection_sliding_window.egg-info to /home/gstark/SETAV project/setav-II/Lane detection without hough transform/install/lane_detection_sliding_window/lib/python3.10/site-packages/lane_detection_sliding_window-0.0.0-py3.10.egg-info
+[1.595s] running install_scripts
+[1.633s] Installing lane_detector script to /home/gstark/SETAV project/setav-II/Lane detection without hough transform/install/lane_detection_sliding_window/lib/lane_detection_sliding_window
+[1.633s] writing list of installed files to '/home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/install.log'
+[1.675s] Invoked command in '/home/gstark/SETAV project/setav-II/Lane detection without hough transform/lane_detection_sliding_window' returned '0': PYTHONPATH=/home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/prefix_override:/home/gstark/SETAV project/setav-II/Lane detection without hough transform/install/lane_detection_sliding_window/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../build/lane_detection_sliding_window build --build-base /home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/build install --record /home/gstark/SETAV project/setav-II/Lane detection without hough transform/build/lane_detection_sliding_window/install.log --single-version-externally-managed

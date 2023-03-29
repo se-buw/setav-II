@@ -37,7 +37,7 @@ def save(msg):
 		ranges.append(p)
 		output=np.dot(projection_matrix,objpoints)
 		output=output/output[2]
-		if (p[1]>0):
+		if (p[1]>=0):
 			output[0]=output[0]-320
 		image_points.append(output)
 	
