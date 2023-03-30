@@ -5,14 +5,14 @@ import math
 import point_cloud2
 import numpy as np
 
-def test(lidar_msg):
+def convert_to_point_cloud(lidar_msg):
 	lp=lg.LaserProjection()
 	point_cloud_msg=lp.projectLaser(lidar_msg)
 	print("lidar Data!!")
-	return save(point_cloud_msg)
+	return project_to_image_plane(point_cloud_msg)
 
 
-def save(msg):
+def project_to_image_plane(msg):
 	
 	image_points=[]
 	ranges=[]
@@ -35,6 +35,7 @@ def save(msg):
 			
 		objpoints=np.array([p[1],p[0],p[2],1])
 		ranges.append(p)
+		#Lidar point cloud data is transformed to camera image coordinates
 		output=np.dot(projection_matrix,objpoints)
 		output=output/output[2]
 		if (p[1]>=0):
