@@ -42,11 +42,11 @@ class lane:
             left_x=(res1[0]*y_values**2+res1[1]*y_values+res1[2]).astype(int)
             right_x=(res2[0]*y_values**2+res2[1]*y_values+res2[2]).astype(int)
             center_x=(left_x+right_x)//2
-            plt.imshow(image)
+            #plt.imshow(image)
             plt.plot(left_x,y_values,color="red")
             plt.plot(right_x,y_values,color="red")
             plt.plot(center_x,y_values,color="green")
-            plt.show()
+            #plt.show()
             points=center_x.tolist()+y_values.tolist()
             center_lane_points=Int64MultiArray(data=points)
             publisher.publish(center_lane_points)
