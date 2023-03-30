@@ -15,13 +15,13 @@ def visualize(im0s,pred,img,names,colors):
                 
 			det[:, :4] = scale_coords(img.shape[2:], det[:, :4], im0.shape).round()
 
-                # Bounding box on images
+                # Drawing bounding box on images
 			
 
 			for *xyxy, conf, cls in reversed(det):
 				
 
-				if True: 		 # Add bbox to image
+				if True: 		 
 					label = f'{names[int(cls)]} {conf:.2f}'
 					c1,c2 = (int(xyxy[0]), int(xyxy[1])), (int(xyxy[2]), int(xyxy[3]))
 					detected_object_points.append((c1,c2))
