@@ -55,7 +55,6 @@ def convertImage(msg):
 def main(args=None):
 	rclpy.init(args=args)
 	subscriber_node=rclpy.create_node("Compressed_image_subscriber")
-	publisher_node=rclpy.create_node("Lane_publisher")
     
 	subscriber_node.create_subscription(CompressedImage,'/image_raw/compressed',convertImage,10)
     
