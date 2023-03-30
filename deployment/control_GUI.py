@@ -15,10 +15,6 @@ def create_main_window():
     root.title('SETAV-2 Control interface')
     root.resizable(0, 0)
 
-    # add Key capture
-    root.bind('<KeyPress>', Control_frame().keypress)
-    root.bind('<KeyRelease>', Control_frame().keyrelease)
-
     # layout on the root window
     root.columnconfigure(0, weight=4)
     root.columnconfigure(1, weight=1)

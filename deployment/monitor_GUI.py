@@ -31,7 +31,7 @@ class Image_frame():
 
     def reload_image(self,root):
         self.canvas.destroy()
-        self.create_image_frame(root,'./Figure_1.jpg')
+        self.create_image_frame(root,'./image.jpg')
 
 
 
@@ -46,7 +46,7 @@ def create_main_window():
 
     
     image_frame_obj = Image_frame()
-    image_frame_obj.create_image_frame(root,'./Figure_1.jpg')
+    image_frame_obj.create_image_frame(root,'./image.jpg')
 
     root.mainloop()
 

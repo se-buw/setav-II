@@ -21,18 +21,15 @@ class Setup_frame():
         subprocess.run(["./start_raspi_listener.sh", ip_rasp.get(), ip_ev3.get()])
 
     def start_camera_lidar(ip_rasp):
-        print('ip_ev3 ',ip_rasp.get())
+        print('ip_rasp ',ip_rasp.get())
         Setup_frame.save_to_file("ip_rasp.txt",ip_rasp.get())
         subprocess.run(["./start_camera_lidar.sh", ip_rasp.get()])
 
-    def start_lane_detection_publisher():
-        subprocess.run(["./start_lane_detection_publisher.sh"])
-
-    def start_lane_detection_publisher_hough():
-        subprocess.run(["./start_lane_detection_publisher_hough.sh"])
+    def start_RPi_EV3_control():
+        subprocess.run(["./start_RPi_EV3_control.sh"])
     
-    def start_lane_assistance_publisher():
-        subprocess.run(["./start_lane_assistance_publisher.sh"])
+    def start_lane_assistance_publisher(ip_rasp):
+        subprocess.run(["./start_lane_assistance_publisher.sh", ip_rasp.get()])
 
 
     def save_to_file(file,var):
@@ -75,23 +72,14 @@ class Setup_frame():
         # Raspberry camera and lidar fusion enable script
         raspi_button = ttk.Button(frame, text='Camera and lidar fusion', command=lambda: Setup_frame.start_raspi_listener_node(raspi_IP,ev3_IP))
         raspi_button.grid(column=0, row=3)
-        ttk.Label(frame, text='Status:').grid(column=1, row=3, sticky=tk.W)
 
         # Raspberry Lane detection publisher script
-        raspi_button = ttk.Button(frame, text='Lane detection publisher', command=lambda: Setup_frame.start_lane_detection_publisher())
-        raspi_button.grid(column=0, row=4)
-        ttk.Label(frame, text='Status:').grid(column=1, row=4, sticky=tk.W)
-
-
-        # Raspberry Lane detection publisher script
-        raspi_button = ttk.Button(frame, text='Lane detection publisher', command=lambda: Setup_frame.start_lane_detection_publisher_hough())
-        raspi_button.grid(column=1, row=4)
-        ttk.Label(frame, text='Status:').grid(column=2, row=4, sticky=tk.W)
+        raspi_button = ttk.Button(frame, text='RPi -> ev3 control', command=lambda: Setup_frame.start_RPi_EV3_control()).grid(column=2, row=4)
 
         # Lane following
-        ttk.Button(frame, text='Lane follow start', command=lambda: Setup_frame.start_lane_assistance_publisher()).grid(column=0, row=5)
+        ttk.Button(frame, text='Lane follow start', command=lambda: Setup_frame.start_lane_assistance_publisher(raspi_IP)).grid(column=0, row=5)
         #ttk.Button(frame, text='Lane follow stop', command=lambda: Setup_interface.start_lane_detection_publisher()).grid(column=1, row=5) 
-        ttk.Label(frame, text='Status:').grid(column=2, row=5, sticky=tk.W)
+        # ttk.Label(frame, text='Status:').grid(column=2, row=5, sticky=tk.W)
 
         for widget in frame.winfo_children():
             widget.grid(padx=5, pady=5)
