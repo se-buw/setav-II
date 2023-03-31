@@ -87,7 +87,7 @@ class lane:
                 win_xright_low = right_current_x - margin
                 win_xright_high = right_current_x + margin    
     		 		
-    		if(win_xright_low-win_xleft_high>=200):
+                if(win_xright_low-win_xleft_high>=200):
                 	good_left_inds = ((nonzero_y >= window_y_low) & (nonzero_y < window_y_high) & 
                 (nonzero_x >= win_xleft_low) &  (nonzero_x < win_xleft_high)).nonzero()[0]
                 	good_right_inds = ((nonzero_y >= window_y_low) & (nonzero_y < window_y_high) & 

@@ -64,7 +64,7 @@ class lane:
         left_current_x=np.argmax(histogram[:midpoint])
         right_current_x=np.argmax(histogram[midpoint:])+midpoint
         
-        if (right_current_x-left_current_x)>300:
+        if True:
             number_of_windows=9
             margin=100
             minPixels=50
@@ -76,6 +76,7 @@ class lane:
     	
             left_lane_indexes=[]
             right_lane_indexes=[]
+            
     	
             for window in range(number_of_windows):
                 window_y_low=image.shape[0]-(window+1)*window_height
@@ -86,20 +87,20 @@ class lane:
                 win_xright_low = right_current_x - margin
                 win_xright_high = right_current_x + margin    
     		 		
-    		
-                good_left_inds = ((nonzero_y >= window_y_low) & (nonzero_y < window_y_high) & 
+                if(win_xright_low-win_xleft_high>=200):
+                	good_left_inds = ((nonzero_y >= window_y_low) & (nonzero_y < window_y_high) & 
                 (nonzero_x >= win_xleft_low) &  (nonzero_x < win_xleft_high)).nonzero()[0]
-                good_right_inds = ((nonzero_y >= window_y_low) & (nonzero_y < window_y_high) & 
+                	good_right_inds = ((nonzero_y >= window_y_low) & (nonzero_y < window_y_high) & 
                 (nonzero_x >= win_xright_low) &  (nonzero_x < win_xright_high)).nonzero()[0]	
     		
     		
-                left_lane_indexes.append(good_left_inds)
-                right_lane_indexes.append(good_right_inds)
+                	left_lane_indexes.append(good_left_inds)
+                	right_lane_indexes.append(good_right_inds)
     	
-                if len(good_left_inds)>50:
-                    left_current_x=np.int64(np.mean(nonzero_x[good_left_inds]))
-                if len(good_right_inds)>50:
-                    right_current_x=np.int64(np.mean(nonzero_x[good_right_inds]))
+                	if len(good_left_inds)>50:
+                    		left_current_x=np.int64(np.mean(nonzero_x[good_left_inds]))
+                	if len(good_right_inds)>50:
+                    		right_current_x=np.int64(np.mean(nonzero_x[good_right_inds]))
     			
     	
             left_lane_indexes=np.concatenate(left_lane_indexes)
@@ -119,16 +120,12 @@ class lane:
 # Compressed Images are subscribed from the raspberry pi 
 def detect_lane(img):
     
-    print("est")
-    img=img[160:480,:640]
+    
+    img=img[160:480,:]
     detect=lane([189.720,39.405],[22.896,303.403],[387.862    ,40.044],[ 559.159 ,298.290])
     img=detect.perspective(img)
     cv.imwrite("image.jpg",img)
     image=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
-    """cv.imshow("OUtput",image)
-    cv.waitKey(5000)"""
-    
-    #image=lane.convertImage(msg)
    
     rest,image=cv.threshold(image,190,255,cv.THRESH_BINARY)
     cv.imwrite('binary.jpg',image)
@@ -144,10 +141,7 @@ def detect_lane(img):
 def convertImage(msg):
         
 		image=CvBridge().compressed_imgmsg_to_cv2(msg)
-		mtx=np.array([[310.05107829,0.,293.37649276],[  0.,309.51905673,254.25816031],[0.,0.,1.]])
-		dist=np.array([[-4.67303364e-01,2.26729559e-01,-3.79303222e-04,1.20996005e-04,-5.25339796e-02]])
-		image= cv.undistort(image, mtx, dist, None, None)
-    
+		  
 		detect_lane(image)
     
 def main(args=None):
