@@ -37,8 +37,6 @@ class lane:
         try:
             res1=np.polyfit(lefty,leftx,2)
             res2=np.polyfit(righty,rightx,2)
-            print(res1)
-            print(res2)
             left_x=(res1[0]*y_values**2+res1[1]*y_values+res1[2]).astype(int)
             right_x=(res2[0]*y_values**2+res2[1]*y_values+res2[2]).astype(int)
             center_x=(left_x+right_x)//2
@@ -122,13 +120,13 @@ def detect_lane(img):
     
     
     img=img[160:480,:]
-    detect=lane([189.720,39.405],[22.896,303.403],[387.862    ,40.044],[ 559.159 ,298.290])
+    detect=lane([128.271,113.06],[33.328,249.42],[439.860,109.23],[552.006,249.92])
     img=detect.perspective(img)
-    cv.imwrite("image.jpg",img)
+    
     image=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
    
     rest,image=cv.threshold(image,190,255,cv.THRESH_BINARY)
-    cv.imwrite('binary.jpg',image)
+    
     image=detect.gaussianFilter(image)
     try:
         leftx,lefty,rightx,righty=detect.search_window(image)   
@@ -163,12 +161,4 @@ def main(args=None):
 if __name__=='__main__':
     main()
     
-    
-  
-
-
-
-""" lane([159.04,   3.06],
-       [  4.95,  61.98],
-       [401.25,   4.85],
-       [573.23,  67.93])  perspective transform points"""
+   
