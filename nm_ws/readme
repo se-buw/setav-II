@@ -1,43 +1,56 @@
+This repository contains the necessary files to set up a ROS2-based robot simulation workspace using RViz and Gazebo.
+
+The instructions provided below assume that you have ROS2 Humble, Rviz, and Gazebo installed on your machine.
+If not, please install them using the following links:
+1. ROS2 Humble: https://docs.ros.org/en/humble/index.html
+2. Rviz: http://wiki.ros.org/rviz/UserGuide
+3. Gazebo: https://classic.gazebosim.org/tutorials?tut=install_ubuntu
+
+Setup:
+
+Workspace and Repository Setup:
+1. Create a workspace directory named nm_ws and within this workspace, create a new folder called src.
+2. Navigate to the src folder and clone the nm_ws repository from Git:
+cd nm_ws/src
+git clone [repository_url]
+
+Build and Source the Workspace:
+1. Navigate to the nm_ws directory and use colcon build with the --symlink-install flag:
 cd nm_ws/
 colcon build --symlink-install
+
+2. Source the directory using the following command:
 source install/setup.bash
+
+Launching the Robot in RViz
+1. In a new terminal, start RViz:
+rviz2
+2. Open another new terminal and launch the robot:
 ros2 launch nm_robot rsp.launch.py
+3. In a new terminal, start the joint state publisher GUI:
 ros2 run joint_state_publisher_gui joint_state_publisher_gui
 
-rviz2 -d src/nm_robot/config/view_bot.rviz
-ros2 launch nm_robot rsp.launch.py use_sim_time:=true
-ros2 launch gazebo_ros gazebo.launch.py
-ros2 run gazebo_ros spawn_entity.py -topic robot_description -entity bot_name
-
-ros2 launch nm_robot launch_sim.launch.py
+Launching the Robot in Gazebo:
+1. Open a new terminal and launch the robot in Gazebo using the following command:
 ros2 launch nm_robot launch_sim.launch.py world:=./src/nm_robot/worlds/testlayout.world
+
+2. To activate navigation, open a new terminal window and type:
 ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
-teleop_twist_joy -- teleop_node
-joy -- joy_node
+Using Sensors in RViz
+Lidar Sensor
+1. In RViz, click on 'Add' at the bottom left of the menu.
+2. From the pop-up menu, select 'Laser' and press OK.
+3. Under the Laser menu displayed on the left, go to the 'Topic' field and from the dropdown, select /scan.
 
-SSH
-cd nm_ws/
-ssh robot@192.168.8.52
-Ros Lidar Driver: Sudo apt install ros-humble-rplidar-ros
+Camera Sensor
+1. In RViz, click on 'Add' at the bottom left of the menu.
+2. From the pop-up menu, select 'Image' and press OK.
+3. Under the Image menu displayed on the left, go to the 'Topic' field and from the dropdown, select /raw_image.
 
-
-Setting parameters serial port, frame_id, angle_compensate, scan_mode
-cd..
-
-ros2 run rplidar_ros rplidar_composition --ros-args -p serials_port:=/dev/ttyUSB0 -p frame_id:=laser_frame -p angle_compensate:=true -p scan_mode:=Standard
-
-for serial port:
-cd ..
-ls /dev/serial/
-ls /dev/serial/by-id
-ls /dev/serial/by-id
-
-For Lidar:
-cd nm_ws/
-ros2 service call
-select empty message and give {}
+Troubleshooting
+If you encounter any errors, such as "Package not found,"
+make sure to source the workspace using the command source install/setup.bash each time you open a new terminal window.
+This will ensure that any new changes made to the files are reflected.
 
 
-To Kill open new terminal
-killall rplidar_composition
